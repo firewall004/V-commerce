@@ -4,6 +4,8 @@
         <ul class="flex space-x-4">
             <li><a href="{{ route('products') }}" class="hover:text-gray-300">Products</a></li>
             <li><a href="{{ route('cart') }}" class="hover:text-gray-300">Cart</a></li>
+            <li><a href="{{ route('billing.form') }}" class="hover:text-gray-300">Billing Details</a></li>
+
         </ul>
     </div>
 </nav>

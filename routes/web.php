@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\AdminProductController;
+use App\Http\Controllers\BillingController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,18 +19,29 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('layouts.user');
+    return view('welcome');
+})->name('home');
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::middleware('auth')->prefix('cart')->group(function () {
+    Route::get('/', [CartController::class, 'show'])->name('cart');
+    Route::post('/add', [CartController::class, 'add'])->name('cart.add');
+    Route::post('/update', [CartController::class, 'update'])->name('cart.update');
+    Route::post('/remove', [CartController::class, 'remove'])->name('cart.remove');
+});
 
-Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
-Route::get('/cart', [CartController::class, 'show'])->name('cart');
-Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
-Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
+Route::middleware('auth')->get('/products', [ProductController::class, 'index'])->name('products');
 
-Route::get('/products', [ProductController::class, 'index'])->name('products');
-
-Route::prefix('admin')->group(function () {
+Route::middleware('admin')->prefix('admin')->group(function () {
     Route::get('/products', [AdminProductController::class, 'index'])->name('admin.products.index');
     Route::get('/products/create', [AdminProductController::class, 'create'])->name('admin.products.create');
     Route::post('/products/store', [AdminProductController::class, 'store'])->name('admin.products.store');
@@ -36,3 +49,8 @@ Route::prefix('admin')->group(function () {
     Route::put('/products/{id}/update', [AdminProductController::class, 'update'])->name('admin.products.update');
     Route::delete('/products/{id}/delete', [AdminProductController::class, 'destroy'])->name('admin.products.destroy');
 });
+
+Route::get('/billing', [BillingController::class, 'showForm'])->name('billing.form');
+Route::post('/billing', [BillingController::class, 'submit'])->name('billing.submit');
+
+require __DIR__ . '/auth.php';

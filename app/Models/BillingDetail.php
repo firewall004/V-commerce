@@ -9,10 +9,10 @@ class BillingDetail extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['order_id', 'name', 'email', 'address'];
+    protected $fillable = ['user_id', 'name', 'email', 'address'];
 
-    public function order()
+    public function user()
     {
-        return $this->belongsTo(Order::class);
+        return $this->belongsTo(User::class);
     }
 }
