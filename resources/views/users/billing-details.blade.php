@@ -8,15 +8,17 @@
             @csrf
             <div class="mb-4">
                 <label for="name" class="block text-gray-700 font-bold mb-2">Name</label>
-                <input type="text" id="name" name="name" class="form-input" required>
+                <input type="text" id="name" name="name" class="form-input"
+                    value="{{ $billingDetail ? $billingDetail->name : '' }}" required>
             </div>
             <div class="mb-4">
                 <label for="email" class="block text-gray-700 font-bold mb-2">Email</label>
-                <input type="email" id="email" name="email" class="form-input" required>
+                <input type="email" id="email" name="email" class="form-input"
+                    value="{{ $billingDetail ? $billingDetail->email : '' }}" required>
             </div>
             <div class="mb-4">
                 <label for="address" class="block text-gray-700 font-bold mb-2">Address</label>
-                <textarea id="address" name="address" class="form-textarea" rows="3" required></textarea>
+                <textarea id="address" name="address" class="form-textarea" rows="3" required>{{ $billingDetail ? $billingDetail->address : '' }}</textarea>
             </div>
 
             <button type="submit"

@@ -34,12 +34,12 @@
                                 </td>
                                 <td class="border px-4 py-2">{{ $item['price'] * $item['quantity'] }}</td>
                                 <td class="border px-4 py-2">
-                                    {{-- <button type="submit" name="action" value="update"
-                                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">Update</button> --}}
+                                    <button type="submit" name="action" value="update"
+                                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">Update</button>
 
 
 
-                                    <form action="{{ route('cart.remove') }}" method="POST" class="inline-block">
+                                    <form action="" method="POST" class="inline-block">
                                         <input type="hidden" name="product_id" value="{{ $productId }}">
                                         {{-- <button type="submit" class="text-red-600 hover:text-red-900">Remove</button> --}}
                                     </form>

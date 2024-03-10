@@ -10,7 +10,7 @@
             </div>
         @endif
 
-        <a href="{{ route('admin.products.create') }}"
+        <a href="{{ route('products.create') }}"
             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mb-4 inline-block rounded">Add New
             Product</a>
 
@@ -32,9 +32,9 @@
                         <td class="border border-gray-200 px-4 py-2">{{ $product->description }}</td>
                         <td class="border border-gray-200 px-4 py-2">${{ $product->price }}</td>
                         <td class="border border-gray-200 px-4 py-2">
-                            <a href="{{ route('admin.products.edit', $product->id) }}"
+                            <a href="{{ route('products.edit', $product->id) }}"
                                 class="text-blue-600 hover:text-blue-900 mr-2">Edit</a>
-                            <form action="{{ route('admin.products.destroy', $product->id) }}" method="POST"
+                            <form action="{{ route('products.destroy', $product->id) }}" method="POST"
                                 class="inline-block">
                                 @csrf
                                 @method('DELETE')
