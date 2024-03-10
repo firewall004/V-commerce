@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -43,7 +44,7 @@ class CartController extends Controller
 
     public function show()
     {
-        $cartItems = session()->get('cart');
+        $cartItems = User::cartItems();
         return view('users.cart', compact('cartItems'));
     }
 

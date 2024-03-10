@@ -58,6 +58,14 @@
                     </tbody>
                 </table>
             </form>
+
+            <div class="flex justify-end mt-10">
+                <form action="{{ route('order.purchase') }}" method="POST">
+                    @csrf
+                    <button type="submit"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Proceed to Buy</button>
+                </form>
+            </div>
         @else
             <p>Your cart is empty.</p>
         @endif

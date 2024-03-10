@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminProductController;
 use App\Http\Controllers\BillingController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -37,6 +38,12 @@ Route::middleware('admin')->prefix('admin')->group(function () {
 Route::middleware('auth')->prefix('billing')->group(function () {
     Route::get('/', [BillingController::class, 'showForm'])->name('billing.form');
     Route::post('/', [BillingController::class, 'submit'])->name('billing.submit');
+});
+
+
+Route::middleware('auth')->prefix('orders')->group(function () {
+    Route::get('/', [OrderController::class, 'index'])->name('orders.index');
+    Route::post('/purchase', [OrderController::class, 'purchase'])->name('order.purchase');
 });
 
 
