@@ -1,0 +1,65 @@
+@extends('layouts.user')
+
+@section('content')
+    <div class="container mx-auto py-8">
+        <h1 class="text-2xl font-bold mb-4">Your Cart</h1>
+
+        @if (session('success'))
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
+                <span class="block sm:inline">{{ session('success') }}</span>
+            </div>
+        @endif
+
+        @if ($cartItems && count($cartItems) > 0)
+            <form action="{{ route('cart.update') }}" method="POST">
+                @csrf
+                <table class="table-auto w-full">
+                    <thead>
+                        <tr class="bg-gray-200">
+                            <th class="px-4 py-2">Name</th>
+                            <th class="px-4 py-2">Price</th>
+                            <th class="px-4 py-2">Quantity</th>
+                            <th class="px-4 py-2">Total</th>
+                            <th class="px-4 py-2">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($cartItems as $productId => $item)
+                            <tr>
+                                <td class="border px-4 py-2">{{ $item['name'] }}</td>
+                                <td class="border px-4 py-2">{{ $item['price'] }}</td>
+                                <td class="border px-4 py-2">
+                                    <input type="number" name="quantity[{{ $productId }}]"
+                                        value="{{ $item['quantity'] }}" min="1" class="w-16 text-center">
+                                </td>
+                                <td class="border px-4 py-2">{{ $item['price'] * $item['quantity'] }}</td>
+                                <td class="border px-4 py-2">
+                                    {{-- <button type="submit" name="action" value="update"
+                                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">Update</button> --}}
+
+
+
+                                    <form action="{{ route('cart.remove') }}" method="POST" class="inline-block">
+                                        <input type="hidden" name="product_id" value="{{ $productId }}">
+                                        {{-- <button type="submit" class="text-red-600 hover:text-red-900">Remove</button> --}}
+                                    </form>
+
+                                    <form action="{{ route('cart.remove') }}" method="POST" class="inline-block">
+                                        @csrf
+                                        <input type="hidden" name="product_id" value="{{ $productId }}">
+                                        <button type="submit" class="text-red-600 hover:text-red-900">Remove</button>
+
+                                    </form>
+
+
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </form>
+        @else
+            <p>Your cart is empty.</p>
+        @endif
+    </div>
+@endsection
