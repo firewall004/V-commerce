@@ -29,11 +29,9 @@ class OrderController extends Controller
             $order = Order::create([
                 'user_id' => auth()->id(),
                 'total_amount' => $totalPrice,
-                'status' => Order::STATUS_PURCHASED,
+                'status' => Order::STATUS_PENDING,
                 'order_code' => Order::generateUniqueCode(),
             ]);
-
-            // $order->products()->attach($cartItems->keys());
 
             foreach ($cartItems as $productId => $cartItem) {
                 $product = Product::find($productId);
@@ -45,9 +43,9 @@ class OrderController extends Controller
                 }
             }
 
-            session()->put('cart', []);
+            session()->put('order_id', $order->id);
 
-            return redirect()->route('orders.index')->with('success', 'Order placed successfully');
+            return redirect()->route('payment.paypal');
         } catch (Throwable $th) {
             Log::error($th->getMessage());
             throw $th;

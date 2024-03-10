@@ -22,6 +22,6 @@ class IsAdminMiddleware
             }
         }
 
-        return redirect()->route('home')->with('error', 'Unauthorized access');
+        return redirect('/')->with('error', 'Unauthorized access');
     }
 }

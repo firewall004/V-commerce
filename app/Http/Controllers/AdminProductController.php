@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use Throwable;
 
 class AdminProductController extends Controller
 {
@@ -20,15 +21,28 @@ class AdminProductController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'description' => 'required',
-            'price' => 'required|numeric|min:0',
-        ]);
+        try {
+            $request->validate([
+                'name' => 'required',
+                'description' => 'required',
+                'price' => 'required|numeric|min:0',
+                'image' => 'required|mimes:jpeg,png,jpg,gif|max:2048',
+            ]);
 
-        Product::create($request->only(['name', 'description', 'price']));
+            $imageName = time() . '.' . $request->image->extension();
+            $request->image->storeAs('public/images/products', $imageName);
 
-        return redirect()->route('products.index')->with('success', 'Product created successfully');
+            $product = new Product();
+            $product->name = $request->name;
+            $product->description = $request->description;
+            $product->price = $request->price;
+            $product->image = $imageName;
+            $product->save();
+
+            return redirect()->route('products.index')->with('success', 'Product created successfully');
+        } catch (Throwable $th) {
+            dd($th);
+        }
     }
 
     public function edit($id)

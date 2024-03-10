@@ -11,11 +11,8 @@
 </head>
 
 <body class="bg-gray-100">
-    <nav class="bg-gray-800 text-white py-4">
-        <div class="container mx-auto px-4">
-            <h1 class="text-2xl font-bold">{{ config('app.name', 'Laravel') }} - Admin Panel</h1>
-        </div>
-    </nav>
+    @include('layouts.partials.admin.nav')
+
     <div class="container mx-auto px-4 py-8">
         @yield('content')
     </div>

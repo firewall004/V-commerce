@@ -3,18 +3,23 @@
 use App\Http\Controllers\AdminProductController;
 use App\Http\Controllers\BillingController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::middleware('auth')->group(function () {
+    Route::get('/', [DashboardController::class, 'index'])->name('users.home');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+});
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
+    Route::get('/', [DashboardController::class, 'adminDashboard'])->name('admin.home');
+    Route::get('/dashboard', [DashboardController::class, 'adminDashboard']);
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -33,6 +38,7 @@ Route::middleware('auth')->get('/products', [ProductController::class, 'index'])
 
 Route::middleware('admin')->prefix('admin')->group(function () {
     Route::resource('products', AdminProductController::class);
+    Route::get('/users', [UserController::class, 'index'])->name('users.index');
 });
 
 Route::middleware('auth')->prefix('billing')->group(function () {
@@ -46,6 +52,15 @@ Route::middleware('auth')->prefix('orders')->group(function () {
     Route::post('/purchase', [OrderController::class, 'purchase'])->name('order.purchase');
     Route::get('/{order}', [OrderController::class, 'show'])->name('order.show');
 });
+
+
+Route::middleware('auth')->get('/paypal', [PaymentController::class, 'paypal'])->name('payment.paypal');
+Route::post('/success', [PaymentController::class, 'success'])->name('payment.success');
+Route::get('/cancel', [PaymentController::class, 'cancel'])->name('payment.cancel');
+
+Route::get('/thank-you', function () {
+    return view('thank-you');
+})->name('thank-you');
 
 
 require __DIR__ . '/auth.php';
