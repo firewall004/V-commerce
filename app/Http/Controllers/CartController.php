@@ -75,4 +75,10 @@ class CartController extends Controller
 
         return redirect()->back()->with('success', 'Product removed from cart');
     }
+
+    public function clear()
+    {
+        session()->forget('cart');
+        return redirect()->route('cart')->with('success', 'Cart cleared successfully.');
+    }
 }

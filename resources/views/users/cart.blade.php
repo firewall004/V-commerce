@@ -7,10 +7,15 @@
         @include('layouts.partials.flash')
 
         @if ($cartItems && count($cartItems) > 0)
+            <form action="{{ route('cart.clear') }}" method="POST" class="flex justify-end mb-4">
+                @csrf
+                <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded-md">Clear
+                    Cart</button>
+            </form>
+
             <form action="{{ route('cart.update') }}" method="POST">
                 @csrf
-                {{-- TODO: Add clear cart button --}}
-                <table class="table-auto w-full">
+                <table class="w-full border-collapse border border-gray-200">
                     <thead>
                         <tr class="bg-gray-200">
                             <th class="px-4 py-2">Name</th>
@@ -32,23 +37,13 @@
                                 <td class="border px-4 py-2">{{ $item['price'] * $item['quantity'] }}</td>
                                 <td class="border px-4 py-2">
                                     <button type="submit" name="action" value="update"
-                                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">Update</button>
-
-
-
-                                    <form action="" method="POST" class="inline-block">
-                                        <input type="hidden" name="product_id" value="{{ $productId }}">
-                                        {{-- <button type="submit" class="text-red-600 hover:text-red-900">Remove</button> --}}
-                                    </form>
+                                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded-md">Update</button>
 
                                     <form action="{{ route('cart.remove') }}" method="POST" class="inline-block">
                                         @csrf
                                         <input type="hidden" name="product_id" value="{{ $productId }}">
                                         <button type="submit" class="text-red-600 hover:text-red-900">Remove</button>
-
                                     </form>
-
-
                                 </td>
                             </tr>
                         @endforeach
@@ -60,11 +55,12 @@
                 <form action="{{ route('order.purchase') }}" method="POST">
                     @csrf
                     <button type="submit"
-                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Proceed to Buy</button>
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md">Proceed to
+                        Buy</button>
                 </form>
             </div>
         @else
-            <p>Your cart is empty.</p>
+            <p class="text-center text-gray-500">Your cart is empty.</p>
         @endif
     </div>
 @endsection

@@ -52,5 +52,11 @@
                 @endforelse
             </tbody>
         </table>
+
+        <div class="mt-4">
+            <div class="mt-4">
+                {{ $products->links() }}
+            </div>
+        </div>
     </div>
 @endsection

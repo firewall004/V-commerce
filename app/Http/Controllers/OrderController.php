@@ -12,7 +12,7 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $userOrders = auth()->user()->orders()->latest()->get();
+        $userOrders = auth()->user()->orders()->latest()->paginate(10);
 
         return view('users.orders', ['orders' => $userOrders]);
     }

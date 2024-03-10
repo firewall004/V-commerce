@@ -32,6 +32,7 @@ Route::middleware('auth')->prefix('cart')->group(function () {
     Route::post('/add', [CartController::class, 'add'])->name('cart.add');
     Route::post('/update', [CartController::class, 'update'])->name('cart.update');
     Route::post('/remove', [CartController::class, 'remove'])->name('cart.remove');
+    Route::post('/clear', [CartController::class, 'clear'])->name('cart.clear');
 });
 
 Route::middleware('auth')->get('/products', [ProductController::class, 'index'])->name('products');

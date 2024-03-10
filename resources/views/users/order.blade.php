@@ -12,6 +12,10 @@
             <span class="font-semibold">Purchased Date:</span> {{ $order->created_at->format('d/m/Y') }}
         </div>
 
+        <div class="mb-4">
+            <span class="font-semibold">Status:</span> {{ $order->status }}
+        </div>
+
         <table class="w-full border-collapse border border-gray-300">
             <thead>
                 <tr>

@@ -1,6 +1,6 @@
 <nav class="bg-gray-800 text-white py-4">
     <div class="container mx-auto px-4 flex justify-between items-center">
-        <h1 class="text-2xl font-bold">{{ config('app.name', 'Laravel') }} - Admin Panel</h1>
+        <a href="/admin/" class="text-2xl font-bold">{{ config('app.name', 'Laravel') }} - Admin Panel</a>
         <ul class="flex items-center">
             <li class="ml-4">
                 <a href="{{ route('products.index') }}" class="text-white hover:text-gray-300">Products</a>
