@@ -30,7 +30,7 @@
                         <td class="border border-gray-200 px-4 py-2">{{ $loop->iteration }}</td>
                         <td class="border border-gray-200 px-4 py-2">{{ $product->name }}</td>
                         <td class="border border-gray-200 px-4 py-2">{{ $product->description }}</td>
-                        <td class="border border-gray-200 px-4 py-2">${{ $product->price }}</td>
+                        <td class="border border-gray-200 px-4 py-2">{{ $product->price }}</td>
                         <td class="border border-gray-200 px-4 py-2">
                             <a href="{{ route('products.edit', $product->id) }}"
                                 class="text-blue-600 hover:text-blue-900 mr-2">Edit</a>

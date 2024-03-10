@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
 use Throwable;
@@ -32,7 +33,17 @@ class OrderController extends Controller
                 'order_code' => Order::generateUniqueCode(),
             ]);
 
-            $order->products()->attach($cartItems->keys());
+            // $order->products()->attach($cartItems->keys());
+
+            foreach ($cartItems as $productId => $cartItem) {
+                $product = Product::find($productId);
+                if ($product) {
+                    $order->products()->attach($product, [
+                        'quantity' => $cartItem['quantity'],
+                        'price' => $cartItem['price'],
+                    ]);
+                }
+            }
 
             session()->put('cart', []);
 
@@ -41,5 +52,10 @@ class OrderController extends Controller
             Log::error($th->getMessage());
             throw $th;
         }
+    }
+
+    public function show(Order $order)
+    {
+        return view('users.order', ['order' => $order]);
     }
 }

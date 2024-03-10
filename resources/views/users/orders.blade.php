@@ -22,6 +22,10 @@
                             <td class="border border-gray-300 px-4 py-2">{{ $order->total_amount }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $order->created_at->format('Y-m-d H:i:s') }}
                             </td>
+                            <td>
+                                <a href="{{ route('order.show', $order) }}"
+                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">View</a>
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>

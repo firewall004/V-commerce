@@ -21,7 +21,9 @@ class Order extends Model
 
     public function products()
     {
-        return $this->belongsToMany(Product::class, 'orders_products');
+        return $this->belongsToMany(Product::class, 'orders_products')
+            ->withPivot('quantity', 'price')
+            ->withTimestamps();
     }
 
     public static function generateUniqueCode()

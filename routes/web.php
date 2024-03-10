@@ -44,6 +44,7 @@ Route::middleware('auth')->prefix('billing')->group(function () {
 Route::middleware('auth')->prefix('orders')->group(function () {
     Route::get('/', [OrderController::class, 'index'])->name('orders.index');
     Route::post('/purchase', [OrderController::class, 'purchase'])->name('order.purchase');
+    Route::get('/{order}', [OrderController::class, 'show'])->name('order.show');
 });
 
 
