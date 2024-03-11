@@ -47,21 +47,14 @@ Route::middleware('auth')->prefix('billing')->group(function () {
     Route::post('/', [BillingController::class, 'submit'])->name('billing.submit');
 });
 
-
 Route::middleware('auth')->prefix('orders')->group(function () {
     Route::get('/', [OrderController::class, 'index'])->name('orders.index');
     Route::post('/purchase', [OrderController::class, 'purchase'])->name('order.purchase');
     Route::get('/{order}', [OrderController::class, 'show'])->name('order.show');
 });
 
-
 Route::middleware('auth')->get('/paypal', [PaymentController::class, 'paypal'])->name('payment.paypal');
 Route::post('/success', [PaymentController::class, 'success'])->name('payment.success');
 Route::get('/cancel', [PaymentController::class, 'cancel'])->name('payment.cancel');
-
-Route::get('/thank-you', function () {
-    return view('thank-you');
-})->name('thank-you');
-
 
 require __DIR__ . '/auth.php';
