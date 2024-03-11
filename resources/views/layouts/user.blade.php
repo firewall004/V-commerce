@@ -10,13 +10,17 @@
 </head>
 
 <body class="bg-gray-100">
-    @include('layouts.partials.users.nav')
 
-    <main class="container mx-auto px-4 py-8">
-        @yield('content')
-    </main>
+    <div class="flex flex-col min-h-screen">
+        @include('layouts.partials.users.nav')
 
-    @include('layouts.partials.footer')
+        <main class="container mx-auto px-4 py-8 flex-grow">
+            @yield('content')
+        </main>
+
+        @include('layouts.partials.footer')
+    </div>
+
 </body>
 
 </html>

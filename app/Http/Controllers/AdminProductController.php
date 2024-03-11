@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use Illuminate\Support\Facades\Log;
 use Throwable;
 
 class AdminProductController extends Controller
@@ -41,7 +42,8 @@ class AdminProductController extends Controller
 
             return redirect()->route('products.index')->with('success', 'Product created successfully');
         } catch (Throwable $th) {
-            dd($th);
+            Log::error($th->getMessage());
+            return redirect()->route('products.index')->with('error', 'Product created failed');
         }
     }
 
